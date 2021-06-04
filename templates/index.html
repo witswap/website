@@ -407,9 +407,6 @@
                     } else {
                         $('.current-balance').html('0 WIT');
                     }
-                    if (data.balance) {
-                        $('.current-balance').html(data.balance);
-                    }
                     setTimeout(function(){ getBalance(); }, 5000);
               });
             }
