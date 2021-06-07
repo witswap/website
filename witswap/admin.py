@@ -5,8 +5,16 @@ from witswap.models import WitnetAddress, WitnetToEthereumSwap, EthereumToWitnet
 
 
 class WitnetToEthereumSwapAdmin(admin.ModelAdmin):
-    list_display = ('id', 'status', '_custodian', 'date_created', 'send_swapped_funds_to', 'receive_user_funds_at', 'total_funds_received',
-                    'total_swapped', 'swap_ethereum_transaction_hash')
+    list_display = ('id', 'status', '_custodian', 'date_created', 'send_swapped_funds_to', 'receive_user_funds_at',
+                    'total_funds_received', 'unconfirmed_funds_received', 'total_swapped',
+                    'swap_ethereum_transaction_hash')
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ["send_swapped_funds_to", "receive_user_funds_at", 'total_funds_received',
+                    'unconfirmed_funds_received']
+        else:
+            return []
 
     def _custodian(self, obj):
         return mark_safe(obj.receive_user_funds_at.custodian.description)
@@ -16,7 +24,8 @@ admin.site.register(WitnetToEthereumSwap, WitnetToEthereumSwapAdmin)
 
 
 class EthereumToWitnetSwapAdmin(admin.ModelAdmin):
-    list_display = ('id', 'swap_completed', 'custodian', 'date_created', 'initial_amount', 'swapped_amount', 'send_converted_funds_to',
+    list_display = ('id', 'swap_completed', 'custodian', 'date_created', 'initial_amount', 'swapped_amount',
+                    'send_converted_funds_to',
                     'burn_ethereum_transaction_hash', 'swap_witnet_transaction_hash')
 
 

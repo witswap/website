@@ -55,12 +55,12 @@ def create_witnet_to_ethereum_swap(send_swapped_funds_to):
     return swap.receive_user_funds_at.address, swap.uuid
 
 
-def create_ethereum_to_witnet_swap(send_converted_funds_to, initial_amount, swapped_amount,
+def create_ethereum_to_witnet_swap(send_converted_funds_to, initial_amount,
                                    receive_user_funds_in, transaction_hash):
 
     swap = EthereumToWitnetSwap()
     swap.initial_amount = initial_amount
-    swap.swapped_amount = swapped_amount
+    swap.swapped_amount = initial_amount
     swap.send_converted_funds_to = send_converted_funds_to
     swap.receive_user_funds_in = receive_user_funds_in
     swap.burn_ethereum_transaction_hash = transaction_hash
