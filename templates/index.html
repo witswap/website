@@ -173,8 +173,7 @@
                   <table class="table table-hover table-dark">
                      <thead>
                         <tr>
-                           <th scope="col">Input</th>
-                           <th scope="col">Output</th>
+                           <th scope="col">Total</th>
                            <th scope="col">Date</th>
                            <th scope="col">Swap Transaction</th>
                         </tr>
@@ -183,7 +182,6 @@
                         {% for transaction in transactions  %}
                         <tr>
                            <td>{{ transaction.input }}</td>
-                           <td>{{ transaction.output }}</td>
                            <td>{{ transaction.date }}</td>
                            <td><a target="_blank" href="{{ transaction.transaction_link }}">{{ transaction.transaction_hash }}</a></td>
                         </tr>
@@ -406,6 +404,9 @@
                         $('.current-balance').html(data.balance + ' WIT');
                     } else {
                         $('.current-balance').html('0 WIT');
+                    }
+                    if (data.balance) {
+                        $('.current-balance').html(data.balance);
                     }
                     setTimeout(function(){ getBalance(); }, 5000);
               });

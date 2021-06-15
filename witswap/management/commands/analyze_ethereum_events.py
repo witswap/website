@@ -40,6 +40,7 @@ class Command(BaseCommand):
 
             print('Swap created')
 
+            configuration = Configuration.objects.get(id=1)
             configuration.ethereum_events_from_block = event.blockNumber + 1
             configuration.full_clean()
             configuration.save()

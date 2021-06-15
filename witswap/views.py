@@ -60,7 +60,9 @@ def get_last_transactions():
     transactions = []
 
     for transaction in transactions_1:
-        tx_hash = transaction.swap_ethereum_transaction_hash[:6] + '...' + transaction.swap_ethereum_transaction_hash[60:]
+        tx_hash = ''
+        if transaction.swap_ethereum_transaction_hash:
+            tx_hash = transaction.swap_ethereum_transaction_hash[:6] + '...' + transaction.swap_ethereum_transaction_hash[60:]
         link = 'https://rinkeby.etherscan.io/tx/%s' % transaction.swap_ethereum_transaction_hash
         total_funds_received = str(int(transaction.total_funds_received / 1e9))
         total_swapped = str(int(transaction.total_swapped / 1e9))
@@ -71,7 +73,9 @@ def get_last_transactions():
                              'transaction_link': link})
 
     for transaction in transactions_2:
-        tx_hash = transaction.swap_witnet_transaction_hash[:6] + '...' + transaction.swap_witnet_transaction_hash[58:]
+        tx_hash = ''
+        if transaction.swap_witnet_transaction_hash:
+            tx_hash = transaction.swap_witnet_transaction_hash[:6] + '...' + transaction.swap_witnet_transaction_hash[58:]
         link = 'https://witnet.network/search/%s' % transaction.swap_witnet_transaction_hash
         initial_amount = str(int(transaction.initial_amount / 1e9))
         swapped_amount = str(int(transaction.swapped_amount / 1e9))
