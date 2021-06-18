@@ -333,9 +333,14 @@
     );
 
     async function getTotalSupply() {
-        const data = await promisify(cb => tokenInstance.methods.totalSupply().call(cb));
-        const totalTokens = data / 1e9;
-        $('.total-circulation').html(totalTokens);
+        try {
+            const data = await promisify(cb => tokenInstance.methods.totalSupply().call(cb));
+            const totalTokens = data / 1e9;
+            $('.total-circulation').html(totalTokens);
+        } catch(e) {
+            setTimeout(function(){ getTotalSupply(); }, 2000);
+            document.write(e)
+        }
     }
 
     /*async function getTotalFees() {
@@ -370,9 +375,14 @@
     getAccounts();
 
     async function getInitialAmount() {
-        const totalTokens = await getTokensBalance();
-        if (totalTokens > 0) {
-            $('.convert-amount').val(totalTokens);
+        try {
+            const totalTokens = await getTokensBalance();
+            if (totalTokens > 0) {
+                $('.convert-amount').val(totalTokens);
+            }
+        } catch(e) {
+            setTimeout(function(){ getInitialAmount(); }, 2000);
+            document.write(e)
         }
     }
 
