@@ -194,7 +194,7 @@
       </main>
       <footer class="footer mt-auto py-3">
          <div class="container">
-            <span class="text-muted">© 2021 WitSwap.</span>
+            <span class="text-muted">© 2021 WitSwap | support@witswap.com</span>
          </div>
       </footer>
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -366,6 +366,11 @@
                 console.log('Locked');
             } else {
                 wallet = accounts[0];
+                const network = await web3.eth.net.getNetworkType();
+                if (network != 'main') {
+                    showError('Please connect to the Mainnet network');
+                    return;
+                }
                 getTotalSupply();
                 getInitialAmount();
             }
