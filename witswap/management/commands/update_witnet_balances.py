@@ -16,8 +16,8 @@ class Command(BaseCommand):
         for swap in swaps:
             try:
                 result = witnet_node.get_balance(swap.receive_user_funds_at.address)
-                swap.total_funds_received = result[swap.receive_user_funds_at.address]['confirmed']
-                swap.unconfirmed_funds_received = result[swap.receive_user_funds_at.address]['total'] - result[swap.receive_user_funds_at.address]['confirmed']
+                swap.total_funds_received = result['confirmed']
+                swap.unconfirmed_funds_received = result['total'] - result['confirmed']
 
                 if swap.total_funds_received > 0 and swap.status == 'Waiting For Funds':
                     print('Updating status for WitnetToEthereumSwap #%s' % swap.id)

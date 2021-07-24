@@ -54,10 +54,10 @@ class WitnetNode(object):
         request = {"jsonrpc": "2.0", "method": "getPkh", "id": "1"}
         return self.execute_request(request, require_synced=False)
 
-    def get_balance(self, node_addresses):
+    def get_balance(self, node_address):
         if self.log:
-            self.log.log_info("get_balance(" + ",".join(node_addresses) + ")", prefix="node", message_type="method")
-        request = {"jsonrpc": "2.0", "method": "getBalance", "params": [node_addresses], "id": "1"}
+            self.log.log_info("get_balance(" + ",".join(node_address) + ")", prefix="node", message_type="method")
+        request = {"jsonrpc": "2.0", "method": "getBalance", "params": {"pkh": node_address, "simple": False}, "id": "1"}
         return self.execute_request(request)
 
     def get_reputation(self, node_address):
