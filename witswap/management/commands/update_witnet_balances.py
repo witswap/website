@@ -1,13 +1,34 @@
-import sys
 import rollbar
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 from witswap.models import WitnetToEthereumSwap
 from witswap.node.witnet_node import WitnetNode
+import sys
+import fcntl
+
+
+file_handle = None
+
+
+def file_is_locked(_file_path):
+    global file_handle
+    file_handle = open(_file_path, 'w')
+    try:
+        fcntl.lockf(file_handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return False
+    except IOError:
+        return True
+
+
+file_path = '/var/lock/test.py'
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        if file_is_locked(file_path):
+            print('another instance is running exiting now')
+            return
+        
         witnet_node = WitnetNode('localhost', '21338')
 
         swaps = WitnetToEthereumSwap.objects.filter(Q(status='Waiting For Funds') |
