@@ -7,6 +7,7 @@ import sys
 import fcntl
 
 file_handle = None
+file_path = '/var/lock/test.py'
 
 
 def file_is_locked(_file_path):
@@ -17,9 +18,6 @@ def file_is_locked(_file_path):
         return False
     except IOError:
         return True
-
-
-file_path = '/var/lock/test.py'
 
 
 class Command(BaseCommand):
