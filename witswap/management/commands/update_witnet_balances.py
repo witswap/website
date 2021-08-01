@@ -6,7 +6,6 @@ from witswap.node.witnet_node import WitnetNode
 import sys
 import fcntl
 
-
 file_handle = None
 
 
@@ -25,23 +24,30 @@ file_path = '/var/lock/test.py'
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        print('Starting script')
+
         if file_is_locked(file_path):
             print('another instance is running exiting now')
             return
-        
+
         witnet_node = WitnetNode('localhost', '21338')
 
-        swaps = WitnetToEthereumSwap.objects.filter(Q(status='Waiting For Funds') |
-                                                    Q(status='Waiting For User Confirm'))
+        swap_ids = WitnetToEthereumSwap.objects.filter(Q(status='Waiting For Funds') |
+                                                       Q(status='Waiting For User Confirm'))\
+            .values_list('id', 'receive_user_funds_at__address')
 
-        for swap in swaps:
+        for swap_values in swap_ids:
             try:
-                result = witnet_node.get_balance(swap.receive_user_funds_at.address)
+                print('Querying Witnet node to check balance of address: ', swap_values[1])
+                result = witnet_node.get_balance(swap_values[1])
+
+                swap = WitnetToEthereumSwap.objects.get(id=swap_values[0])
+
                 swap.total_funds_received = result['confirmed']
                 swap.unconfirmed_funds_received = result['total'] - result['confirmed']
 
                 if swap.total_funds_received > 0 and swap.status == 'Waiting For Funds':
-                    print('Updating status for WitnetToEthereumSwap #%s' % swap.id)
+                    print('Changing WitnetToEthereumSwap #%s back to: Waiting For User Confirm' % swap.id)
                     swap.status = 'Waiting For User Confirm'
 
                 swap.full_clean()
