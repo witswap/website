@@ -3,8 +3,8 @@ from django.core.management.base import BaseCommand
 from django.db.models import Q
 from witswap.models import WitnetToEthereumSwap
 from witswap.node.witnet_node import WitnetNode
-import fcntl
 import sys
+import fcntl
 
 file_handle = None
 file_path = '/var/lock/test.py'
