@@ -22,8 +22,6 @@ def file_is_locked(_file_path):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        print('Starting script')
-
         if file_is_locked(file_path):
             print('another instance is running exiting now')
             return
@@ -36,7 +34,6 @@ class Command(BaseCommand):
 
         for swap_values in swap_ids:
             try:
-                print('Querying Witnet node to check balance of address: ', swap_values[1])
                 result = witnet_node.get_balance(swap_values[1])
 
                 swap = WitnetToEthereumSwap.objects.get(id=swap_values[0])
