@@ -30,7 +30,8 @@ def accept(request, uuid):
             return HttpResponseNotFound()
         swap = swaps[0]
 
-        if swap.status == 'Waiting For User Confirm' and swap.total_funds_received >= 10000000000000:
+        minimum_swap_amount = Configuration.objects.all()[0].minimum_swap_amount
+        if swap.status == 'Waiting For User Confirm' and swap.total_funds_received >= minimum_swap_amount:
             swap.status = 'Waiting To Be Processed'
             fee_percentage = Configuration.objects.all()[0].fee_percentage
             deduct = 1 - fee_percentage / 100
@@ -97,8 +98,10 @@ def index(request):
     total_swapped = total_swapped['total_funds_received__sum'] or 0
 
     fee_percentage = Configuration.objects.all()[0].fee_percentage
+    minimum_swap_amount = Configuration.objects.all()[0].minimum_swap_amount
 
     params = {'address': None,
+              'minimum_swap_amount': minimum_swap_amount,
               'fee_percentage': fee_percentage,
               'transactions': transactions,
               'token_address': EWIT_TOKEN_ADDRESS,
