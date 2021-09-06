@@ -83,6 +83,7 @@ class Configuration(models.Model):
     last_custodian_assigned = models.ForeignKey(Custodian, null=True, blank=True, on_delete=models.SET_NULL)
     is_node_synced = models.BooleanField(default=True)
     fee_percentage = models.IntegerField(default=5)
+    minimum_swap_amount = models.IntegerField(default=10000000000000, help_text='Remember to add the 9 decimals')
 
     class Meta:
         verbose_name = "Configuration"

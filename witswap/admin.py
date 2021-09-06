@@ -40,7 +40,8 @@ admin.site.register(WitnetAddress, WitnetAddressAdmin)
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'ethereum_events_from_block', 'last_custodian_assigned', 'is_node_synced', 'fee_percentage')
+    list_display = ('id', 'ethereum_events_from_block', 'last_custodian_assigned', 'is_node_synced',
+                    'fee_percentage', 'minimum_swap_amount')
 
 
 admin.site.register(Configuration, ConfigurationAdmin)
