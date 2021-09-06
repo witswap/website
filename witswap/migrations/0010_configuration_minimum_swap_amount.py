@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='configuration',
             name='minimum_swap_amount',
-            field=models.IntegerField(default=10000000000000, help_text='Remember to add the 9 decimals'),
+            field=models.BigIntegerField(default=10000000000000, help_text='Remember to add the 9 decimals'),
         ),
     ]
