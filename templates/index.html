@@ -274,8 +274,9 @@
                 return;
             }
 
-            if (convertAmount < 10000) {
-                showError('The minimum to convert is 10,000 tokens');
+            const minimum_swap = {{ minimum_swap_amount }} / 1e9;
+            if (convertAmount < minimum_swap) {
+                showError('The minimum to convert is ' + minimum_swap + ' tokens');
                 return;
             }
 
