@@ -8,11 +8,12 @@ class WitnetToEthereumSwapAdmin(admin.ModelAdmin):
     list_display = ('id', 'status', '_custodian', 'date_created', 'send_swapped_funds_to', 'receive_user_funds_at',
                     'total_funds_received', 'unconfirmed_funds_received', 'total_swapped',
                     'swap_ethereum_transaction_hash')
+    list_filter = ['status', 'receive_user_funds_at__custodian']
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
             return ["send_swapped_funds_to", "receive_user_funds_at", 'total_funds_received',
-                    'unconfirmed_funds_received']
+                    'unconfirmed_funds_received', 'date_created']
         else:
             return []
 
@@ -27,6 +28,14 @@ class EthereumToWitnetSwapAdmin(admin.ModelAdmin):
     list_display = ('id', 'swap_completed', 'custodian', 'date_created', 'initial_amount', 'swapped_amount',
                     'send_converted_funds_to',
                     'burn_ethereum_transaction_hash', 'swap_witnet_transaction_hash')
+    list_filter = ['swap_completed', 'custodian']
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return ["burn_ethereum_transaction_hash", "initial_amount", 'swapped_amount',
+                    'send_converted_funds_to', 'date_created']
+        else:
+            return []
 
 
 admin.site.register(EthereumToWitnetSwap, EthereumToWitnetSwapAdmin)
