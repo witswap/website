@@ -454,7 +454,8 @@
           })
           .catch(function(error) {
               if (error.status == 400) {
-                  showError('You can\'t confirm until you send at least 10,000 WIT and they are confirmed');
+                  const minimum_swap = {{ minimum_swap_amount }} / 1e9;
+                  showError('You can\'t confirm until you send at least ' + minimum_swap + ' WIT and they are confirmed');
               } else {
                   showError('An error occurred, please try again');
               }
