@@ -274,9 +274,9 @@
                 return;
             }
 
-            const minimum_swap = {{ minimum_swap_amount }} / 1e9;
-            if (convertAmount < minimum_swap) {
-                showError('The minimum to convert is ' + minimum_swap + ' tokens');
+            const minimum_burn = {{ minimum_burn_amount }} / 1e9;
+            if (convertAmount < minimum_burn) {
+                showError('The minimum to convert is ' + minimum_burn + ' tokens');
                 return;
             }
 

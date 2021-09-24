@@ -98,10 +98,10 @@ def index(request):
     total_swapped = total_swapped['total_funds_received__sum'] or 0
 
     fee_percentage = Configuration.objects.all()[0].fee_percentage
-    minimum_swap_amount = Configuration.objects.all()[0].minimum_swap_amount
+    minimum_burn_amount = Configuration.objects.all()[0].minimum_burn_amount
 
     params = {'address': None,
-              'minimum_swap_amount': minimum_swap_amount,
+              'minimum_burn_amount': minimum_burn_amount,
               'fee_percentage': fee_percentage,
               'transactions': transactions,
               'token_address': EWIT_TOKEN_ADDRESS,

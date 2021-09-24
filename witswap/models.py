@@ -84,6 +84,7 @@ class Configuration(models.Model):
     is_node_synced = models.BooleanField(default=True)
     fee_percentage = models.IntegerField(default=5)
     minimum_swap_amount = models.BigIntegerField(default=10000000000000, help_text='Remember to add the 9 decimals')
+    minimum_burn_amount = models.BigIntegerField(default=10000000000000, help_text='Remember to add the 9 decimals')
 
     class Meta:
         verbose_name = "Configuration"
